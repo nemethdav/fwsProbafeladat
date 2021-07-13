@@ -15,6 +15,7 @@ class CreateFireExtinguisherTypesTable extends Migration
     {
         Schema::create('fire_extinguisher_types', function (Blueprint $table) {
             $table->id();
+            $table->string("fire_extinguisher_type");
             $table->timestamps();
         });
     }

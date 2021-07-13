@@ -15,6 +15,15 @@ class CreateFireExtinguishersTable extends Migration
     {
         Schema::create('fire_extinguishers', function (Blueprint $table) {
             $table->id();
+            $table->integer("insideID");
+            $table->integer("serialNumber");
+            $table->string("place");
+            $table->unsignedBigInteger("typeID");
+            $table->foreign("typeID")->on("fire_extinguisher_types")->references("id");
+            $table->date("productionDate");
+            $table->text("comment");
+            $table->unsignedBigInteger("establishmentsID");
+            $table->foreign("establishmentsID")->on("establishments")->references("id");
             $table->timestamps();
         });
     }

@@ -15,6 +15,12 @@ class CreateMaintenancesTable extends Migration
     {
         Schema::create('maintenances', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("fireExtinguisherID");
+            $table->foreign("fireExtinguisherID")->on("fire_extinguishers")->references("id");
+            $table->unsignedBigInteger("maintenanceType");
+            $table->foreign("maintenanceType")->on("maintenance_types")->references("id");
+            $table->date("maintenanceDate");
+            $table->text("maintenanceComment");
             $table->timestamps();
         });
     }
