@@ -14,7 +14,8 @@ class FireExtinguisherController extends Controller
      */
     public function index()
     {
-        return view('list');
+        $fireExtinguishers = FireExtinguisher::all();
+        return view('list', compact('fireExtinguishers'));
     }
 
     /**
@@ -35,7 +36,17 @@ class FireExtinguisherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        FireExtinguisher::create([
+            'establishmentsID' => $request->establishmentsID,
+            'insideID' => $request->insideID,
+            'place' => $request->place,
+            'typeID' => $request->typeID,
+            'serialNumber'=>$request->serialNumber,
+            'productionDate'=>$request->productionDate,
+            'comment'=>$request->comment
+        ]);
+
+        return ['message' => 'Létrehozva'];
     }
 
     /**
@@ -69,7 +80,17 @@ class FireExtinguisherController extends Controller
      */
     public function update(Request $request, FireExtinguisher $fireExtinguisher)
     {
-        //
+        $fireExtinguisher->update([
+            'establishmentsID' => $request->establishmentsID,
+            'insideID' => $request->insideID,
+            'place' => $request->place,
+            'typeID' => $request->typeID,
+            'serialNumber'=>$request->serialNumber,
+            'productionDate'=>$request->productionDate,
+            'comment'=>$request->comment
+        ]);
+
+        return ['message' => 'Módosítva'];
     }
 
     /**
@@ -80,6 +101,6 @@ class FireExtinguisherController extends Controller
      */
     public function destroy(FireExtinguisher $fireExtinguisher)
     {
-        //
+        $fireExtinguisher->delete();
     }
 }
