@@ -21,7 +21,7 @@ class CreateFireExtinguishersTable extends Migration
             $table->unsignedBigInteger("typeID");
             $table->foreign("typeID")->on("fire_extinguisher_types")->references("id");
             $table->date("productionDate");
-            $table->text("comment");
+            $table->text("comment")->nullable();
             $table->unsignedBigInteger("establishmentsID");
             $table->foreign("establishmentsID")->on("establishments")->references("id");
             $table->timestamps();

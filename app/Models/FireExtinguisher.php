@@ -9,12 +9,14 @@ class FireExtinguisher extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['establishmentsID', 'insideID', 'place', 'typeID', 'serialNumber', 'productionDate', 'comment'];
+
     public function establishment() {
         return $this->belongsTo(Establishment::class);
     }
 
     public function fireExtinguisherType() {
-        return $this->belongsTo(FireExtinguisherType::class);
+        return $this->belongsTo(FireExtinguisherType::class, 'typeID', 'id');
     }
 
     public function maintenance(){

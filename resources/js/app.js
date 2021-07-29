@@ -20,7 +20,7 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('modal', require('./components/Modal').default);
+Vue.component('table', require('./components/Table.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,5 +29,42 @@ Vue.component('modal', require('./components/Modal').default);
  */
 
 const app = new Vue({
-    el: '#app',
-});
+        el: '#app',
+
+        data: {
+            establishment: 0,
+            insideID: 0,
+            place: '',
+            typeID: 0,
+            serialNumber: 0,
+            productionDate: '',
+            comment: '',
+            multiplication: 1,
+
+
+        },
+
+        methods: {
+            onSubmit(e) {
+                e.preventDefault();
+                axios.post('/fireExtinguisherList', {
+                    establishment: this.establishment,
+                    insideID: this.insideID,
+                    place: this.place,
+                    typeID: this.typeID,
+                    serialNumber: this.serialNumber,
+                    productionDate: this.productionDate,
+                    comment: this.comment,
+                    multiplication: this.multiplication
+                })
+                    .then(response => alert('Success'))
+                    .catch(error =>
+                        console.log(error.response)
+                    );
+                $(function () {
+                    $('#modal').modal('hide');
+                });
+            },
+        },
+    }
+);

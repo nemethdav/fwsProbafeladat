@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Establishment;
 use App\Models\FireExtinguisher;
+use App\Models\FireExtinguisherType;
 use Illuminate\Http\Request;
 
 class FireExtinguisherController extends Controller
@@ -15,7 +17,9 @@ class FireExtinguisherController extends Controller
     public function index()
     {
         $fireExtinguishers = FireExtinguisher::all();
-        return view('list', compact('fireExtinguishers'));
+        $establishments = Establishment::all();
+        $fire_extinguisher_types = FireExtinguisherType::all();
+        return view('homePage', compact('fireExtinguishers', 'establishments', 'fire_extinguisher_types'));
     }
 
     /**
@@ -31,20 +35,22 @@ class FireExtinguisherController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        FireExtinguisher::create([
-            'establishmentsID' => $request->establishmentsID,
-            'insideID' => $request->insideID,
-            'place' => $request->place,
-            'typeID' => $request->typeID,
-            'serialNumber'=>$request->serialNumber,
-            'productionDate'=>$request->productionDate,
-            'comment'=>$request->comment
-        ]);
+        for ($i = 1; $i <= $request->multiplication; $i++) {
+            FireExtinguisher::create([
+                'establishmentsID' => $request->establishment,
+                'insideID' => $request->insideID,
+                'place' => $request->place,
+                'typeID' => $request->typeID,
+                'serialNumber' => $request->serialNumber,
+                'productionDate' => $request->productionDate,
+                'comment' => $request->comment
+            ]);
+        }
 
         return ['message' => 'Létrehozva'];
     }
@@ -52,7 +58,7 @@ class FireExtinguisherController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\FireExtinguisher  $fireExtinguisher
+     * @param \App\Models\FireExtinguisher $fireExtinguisher
      * @return \Illuminate\Http\Response
      */
     public function show(FireExtinguisher $fireExtinguisher)
@@ -63,7 +69,7 @@ class FireExtinguisherController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\FireExtinguisher  $fireExtinguisher
+     * @param \App\Models\FireExtinguisher $fireExtinguisher
      * @return \Illuminate\Http\Response
      */
     public function edit(FireExtinguisher $fireExtinguisher)
@@ -74,8 +80,8 @@ class FireExtinguisherController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\FireExtinguisher  $fireExtinguisher
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\FireExtinguisher $fireExtinguisher
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, FireExtinguisher $fireExtinguisher)
@@ -85,9 +91,9 @@ class FireExtinguisherController extends Controller
             'insideID' => $request->insideID,
             'place' => $request->place,
             'typeID' => $request->typeID,
-            'serialNumber'=>$request->serialNumber,
-            'productionDate'=>$request->productionDate,
-            'comment'=>$request->comment
+            'serialNumber' => $request->serialNumber,
+            'productionDate' => $request->productionDate,
+            'comment' => $request->comment
         ]);
 
         return ['message' => 'Módosítva'];
@@ -96,7 +102,7 @@ class FireExtinguisherController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\FireExtinguisher  $fireExtinguisher
+     * @param \App\Models\FireExtinguisher $fireExtinguisher
      * @return \Illuminate\Http\Response
      */
     public function destroy(FireExtinguisher $fireExtinguisher)
